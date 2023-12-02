@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	token := mustToken()
+	// token := mustToken()
 	//tgClient = telegram.New(token)
 	//fetcher = fetcher.New()
 	//processor = processor.New()
