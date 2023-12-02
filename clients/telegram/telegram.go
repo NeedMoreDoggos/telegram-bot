@@ -34,6 +34,7 @@ func (c *Clien) SendMessage(chatID int, text string) error {
 	if err != nil {
 		fmt.Errorf("can't send message: %w", err)
 	}
+	return nil
 }
 
 func (c *Clien) Update(offset int, limit int) ([]Update, error) {
