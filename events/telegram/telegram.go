@@ -36,7 +36,7 @@ func New(client *telegram.Clien, storage storage.Storage) *Processor {
 func (p *Processor) Fetch(limit int) ([]events.Event, error) {
 	updates, err := p.tg.Update(p.offset, limit)
 	if err != nil {
-		return nil, fmt.Errorf("cant get evenst: %w")
+		return nil, fmt.Errorf("cant get evenst: %w", err)
 	}
 
 	if len(updates) == 0 {
@@ -79,7 +79,7 @@ func (p *Processor) processMessage(event events.Event) error {
 func meta(event events.Event) (Meta, error) {
 	res, ok := event.Meta.(Meta)
 	if !ok {
-		return Meta{}, fmt.Errorf("cant get meta", ErrUnknownMetaType)
+		return Meta{}, fmt.Errorf("cant get meta: %w", ErrUnknownMetaType)
 	}
 
 	return res, nil

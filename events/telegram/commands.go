@@ -19,7 +19,7 @@ const (
 func (p *Processor) doCmd(text string, chatID int, username string) error {
 	text = strings.TrimSpace(text)
 
-	log.Print("got new command '%s' from '%s'", text, username)
+	log.Printf("got new command '%s' from '%s'", text, username)
 
 	switch text {
 	case RndCmd:
