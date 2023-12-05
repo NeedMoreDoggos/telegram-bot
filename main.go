@@ -14,8 +14,8 @@ const (
 func main() {
 	token := mustToken()
 	tgClient = telegram.New(tgBotHost, token)
-	//fetcher = fetcher.New()
-	//processor = processor.New()
+	fetcher = fetcher.New()
+	processor = processor.New()
 	//consumer.Start(fetcher, processor)
 }
 
