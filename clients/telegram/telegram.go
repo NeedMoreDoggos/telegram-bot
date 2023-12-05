@@ -32,8 +32,9 @@ func (c *Clien) SendMessage(chatID int, text string) error {
 
 	_, err := c.doRequest("sendMessage", q)
 	if err != nil {
-		fmt.Errorf("can't send message: %w", err)
+		return fmt.Errorf("can't send message: %w", err)
 	}
+
 	return nil
 }
 
