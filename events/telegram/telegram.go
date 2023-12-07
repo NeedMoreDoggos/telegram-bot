@@ -13,6 +13,7 @@ type Processor struct {
 	tg      *telegram.Clien
 	offset  int
 	storage storage.Storage
+	// commands events.Commands
 }
 
 type Meta struct {

@@ -1,5 +1,8 @@
 package events
 
+type Command = func(args []string) error
+type Commands = map[string]Command
+
 type Fetcher interface {
 	Fetch(limit int) ([]Event, error)
 }

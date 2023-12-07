@@ -22,11 +22,12 @@ func New(fetcher events.Fetcher, processor events.Processor, batchSize int) Cons
 }
 
 func (c Consumer) Start() error {
+	log.Print("service started")
+
 	for {
 		//TODO: механизм ретрая
 		gotEvents, err := c.fetcher.Fetch(c.batchSize)
 		if err != nil {
-			log.Printf("[ERROR] consumer: %s", err.Error())
 			continue
 		}
 

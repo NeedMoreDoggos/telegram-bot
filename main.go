@@ -22,8 +22,6 @@ func main() {
 		files.New(storagePath),
 	)
 
-	log.Print("service started")
-
 	consumer := event_consumer.New(eventsProcessor, eventsProcessor, batchSize)
 
 	if err := consumer.Start(); err != nil {

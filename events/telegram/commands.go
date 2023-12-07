@@ -19,15 +19,17 @@ const (
 func (p *Processor) doCmd(text string, chatID int, username string) error {
 	text = strings.TrimSpace(text)
 
-	log.Printf("got new command '%s' from '%s'", text, username)
+	cmd, args := parseCmd(text)
 
-	switch text {
+	log.Printf("got new command /%s %s from '%s'", text, args, username)
+
+	switch cmd {
 	case RndCmd:
 		return p.sendRandom(chatID, username)
 	case HelpCmd:
 		return p.sendHelp(chatID)
 	case AddCmd:
-		return p.savePage(chatID, text, username)
+		return p.savePages(chatID, args, username)
 	case StartCmd:
 		return p.sendHello(chatID)
 	default:
@@ -62,6 +64,17 @@ func (p *Processor) savePage(chatId int, pageURL string, username string) error 
 	return nil
 }
 
+func (p Processor) savePages(chatId int, pagesURL []string, username string) error {
+	log.Print(pagesURL)
+	for _, pageURL := range pagesURL {
+		if err := p.savePage(chatId, pageURL, username); err != nil {
+			return fmt.Errorf("cant save pages: %w", err)
+		}
+	}
+
+	return nil
+}
+
 func (p *Processor) sendRandom(chatID int, username string) error {
 	page, err := p.storage.PickRandom(username)
 	if err != nil && !errors.Is(err, storage.ErrNoSavedPages) {
@@ -88,4 +101,11 @@ func (p *Processor) sendHello(chatID int) error {
 
 func (p *Processor) unknownCommand(chatId int) error {
 	return p.tg.SendMessage(chatId, msgUnknownCommand)
+}
+
+func parseCmd(text string) (cmd string, args []string) {
+	spliting := strings.Split(text, " ")
+	cmd = spliting[0]
+	args = spliting[1:]
+	return cmd, args
 }
